@@ -10,6 +10,7 @@ from datetime import datetime
 # App Insights
 # TODO: Import required libraries for App Insights
 from opencensus.ext.azure.log_exporter import AzureLogHandler
+from opencensus.ext.azure.log_exporter import AzureEventHandler
 from opencensus.ext.azure import metrics_exporter
 from opencensus.stats import aggregation as aggregation_module
 from opencensus.stats import measure as measure_module
@@ -28,6 +29,7 @@ logger = logging.getLogger(__name__)
 logger.addHandler(AzureLogHandler(
     connection_string='InstrumentationKey=3d3e7bec-d2e0-41b6-b690-7c9cb2020fc2')
 )
+logger.setLevel(logging.INFO)
 # Metrics
 exporter = metrics_exporter.new_metrics_exporter(
     enable_standard_metrics=True,
@@ -128,6 +130,6 @@ def index():
 
 if __name__ == "__main__":
     # comment line below when deploying to VMSS
-    app.run() # local
+    # app.run() # local
     # uncomment the line below before deployment to VMSS
-    # app.run(host='0.0.0.0', threaded=True, debug=True) # remote
+    app.run(host='0.0.0.0', threaded=True, debug=True) # remote
