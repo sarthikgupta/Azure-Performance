@@ -8,7 +8,7 @@ import logging
 from datetime import datetime
 
 # App Insights
-from opencensus.ext.azure.log_exporter import AzureLogHandler
+from opencensus.ext.azure.log_exporter import AzureLogHandler, AzureEventHandler
 from opencensus.ext.azure import metrics_exporter
 from opencensus.ext.azure.trace_exporter import AzureExporter
 from opencensus.ext.flask.flask_middleware import FlaskMiddleware
@@ -25,6 +25,10 @@ logger = logging.getLogger(__name__)
 handler = AzureLogHandler(connection_string='InstrumentationKey=3d3e7bec-d2e0-41b6-b690-7c9cb2020fc2')
 logger.addHandler(handler)
 logger.setLevel(logging.INFO)
+
+logger.addHandler(
+    AzureEventHandler(connection_string='InstrumentationKey=3d3e7bec-d2e0-41b6-b690-7c9cb2020fc2')
+)
 
 # Metrics
 exporter = metrics_exporter.new_metrics_exporter(
